@@ -9,7 +9,7 @@ const {
   deleteStudent,
 } = require("../controllers/studentController");
 
-const validateStudent = require("../middleware/validateStudent");
+const validateStudent = require("../validators/studentValidator");
 
 router.get("/", getAllStudents);
 router.get("/:id", getStudentById);

@@ -1,19 +1,20 @@
-const students = require("../models/studentModel");
+const students = require("../utils/studentData");
+const Student = require("../models/studentSchema");
 
 const getAllStudents = (req, res, next) => {
   try {
     let result = [...students];
 
-    if (req.query.name) {
+    if (req.query?.name) {
       const searchName = req.query.name.toLowerCase();
 
       result = result.filter((student) =>
-        student.name.toLowerCase().includes(searchName),
+        student.name?.toLowerCase().includes(searchName),
       );
     }
 
-    if (req.query.sort === "name") {
-      result.sort((a, b) => a.name.localeCompare(b.name));
+    if (req.query?.sort === "name") {
+      result.sort((a, b) => a.name?.localeCompare(b.name));
     }
 
     res.status(200).json(result);
@@ -26,13 +27,22 @@ const createStudent = (req, res, next) => {
   try {
     const { name, email, course } = req.body;
 
+    const existingStudent = students.find(
+      (student) => student.email?.toLowerCase() === email?.toLowerCase(),
+    );
+
+    if (existingStudent) {
+      return res.status(409).json({
+        message: "Student with this email already exists.",
+      });
+    }
+
     const newStudent = {
       id: students.length + 1,
       name,
       email,
       course,
     };
-
     students.push(newStudent);
 
     res.status(201).json(newStudent);
@@ -41,9 +51,9 @@ const createStudent = (req, res, next) => {
   }
 };
 
-const getStudentById = (req, res) => {
+const getStudentById = (req, res, next) => {
   try {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params?.id);
 
     const student = students.find((student) => student.id === id);
 
@@ -59,9 +69,9 @@ const getStudentById = (req, res) => {
   }
 };
 
-const updateStudent = (req, res) => {
+const updateStudent = (req, res, next) => {
   try {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params?.id);
 
     const student = students.find((student) => student.id === id);
 
@@ -72,6 +82,7 @@ const updateStudent = (req, res) => {
     }
 
     const { name, email, course } = req.body;
+
     student.name = name;
     student.email = email;
     student.course = course;
@@ -82,9 +93,9 @@ const updateStudent = (req, res) => {
   }
 };
 
-const deleteStudent = (req, res) => {
+const deleteStudent = (req, res, next) => {
   try {
-    const id = parseInt(req.params.id);
+    const id = parseInt(req.params?.id);
 
     const studentIndex = students.findIndex((student) => student.id === id);
 

@@ -15,6 +15,10 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/error", (req, res, next) => {
+  next(new Error("This is a fake error for testing."));
+});
+
 app.use("/students", studentRoutes);
 app.use(errorHandler);
 

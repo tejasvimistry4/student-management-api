@@ -1,3 +1,3 @@
-let students = [];
+const students = [];
 
 module.exports = students;
