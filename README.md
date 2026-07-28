@@ -74,6 +74,7 @@ src/
 
 ## API Endpoints
 
+<<<<<<< HEAD
 | Method | Endpoint      | Description       |
 | ------ | ------------- | ----------------- |
 | GET    | /students     | Get all students  |
@@ -81,6 +82,15 @@ src/
 | POST   | /students     | Create student    |
 | PUT    | /students/:id | Update student    |
 | DELETE | /students/:id | Delete student    |
+=======
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| GET | /students | Get all students |
+| GET | /students/:id | Get student by ID |
+| POST | /students | Create student |
+| PUT | /students/:id | Update student |
+| DELETE | /students/:id | Delete student |
+>>>>>>> 6d1f5c2b163471bd3b4a609fc4079944055c6f68
 
 ---
 
